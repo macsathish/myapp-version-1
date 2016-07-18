@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>My List Macsathish</title>
+   <link href="//cdn.datatables.net/1.10.5/css/jquery.dataTables.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.min.js"></script>
+
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>    
+    
+     <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+ <script type="text/javascript">
+
+     var rec_no=3;
+     $(document).ready(function () {
+         $('#mytab').dataTable({
+             "ajax": 'data/dt.txt',
+             "columnDefs": [{
+                 "data": "Rec_No"
+             }, {
+                 "data": "Name"
+             }, {
+                 "data": "Modified"
+             }, {
+                 "data": "Created"
+             }, {
+                 "data": "Action"
+             }]
+         });
+     });
+
+     var table = $('#mytab').DataTable();
+
+     
+     //     var table = $('#mytab').DataTable();
+     // 
+     //table.rows.add( [ {
+     //        "Rec_No":       "Tiger Nixon",
+     //        "Name": "System Architect",
+     //        "Modified": "$3,120",
+     //        "Created": "2011/04/25",
+     //        "Action": "Edinburgh"
+     //       
+     //    }] )
+     //    .draw();
+
+
+     function del_rec(e) {
+
+         var conf = confirm('Are you sure you want to delete your awesome list \"Company audio project?\"');
+         if (conf) {
+             var table = $('#mytab').DataTable();
+
+             table
+        .row($(e).parents('tr'))
+        .remove()
+        .draw();
+         }
+
+     }
+
+     function add(e) {
+
+         var table = $('#mytab').DataTable();
+
+         var name = document.getElementById('txtnewlist').value;
+
+        
+
+//         alert('sdff');
+//         table.rows.add([{
+//             "Rec_No": "3",
+//             "Name": "System Architect",
+//             "Modified": "2011/04/25",
+//             "Created": "2011/04/25",
+//             "Action": "<input id='btn_del' type='button' value='delete' onclick='return del_rec(this);'></input>"
+//         }])
+//    .draw();
+
+         var date = new Date().toLocaleString();
+
+         var del_data= '<input id="btn_del" type="button" value="delete" onclick="return del_rec(this);"></input>';
+
+         var rowNode = table
+    .row.add([rec_no, name, date, date, del_data])
+    .draw()
+    .node();
+
+         document.getElementById('txtnewlist').value = '';
+
+         rec_no = rec_no + 1;
+
+     }
+
+ </script>
+
+</head>
+<body>
+
+<div class="container">
+<div style="border:1px solid black; width:1000px">
+<div >
+<div align="left">
+<br />
+<span> &nbsp;Click Something</span>&nbsp; &nbsp;
+
+ <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">New List</button>
+
+</div>
+<hr />
+
+</div>
+<table id="mytab" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr  >
+                <th  align="left" style="width:16%">Record Number</th>
+                <th align="left" style="width:25%">Name</th>
+                <th align="left"  style="width:17%">Modified</th>
+                <th align="left"  style="width:17%">Created</th>
+                <th align="left" style="width:25%">Action</th>
+                </tr>
+        </thead>
+        <!--<tfoot>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Extn.</th>
+                <th>Start date</th>
+                <th>Salary</th>
+            </tr>
+        </tfoot>-->
+    </table>
+
+</div>
+
+
+
+<!--Bootstrap Modal -->
+
+<div class="modal fade" tabindex="-1"  id="myModal" role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">New List</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-1"><b>Name : </b></div>
+          <div class="col-md-1 col-md-offset-1">
+          <input id="txtnewlist" type="text" value="" />
+          </div>
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="return add(this);" >Create List</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+</body>
+</html>
